@@ -11,14 +11,14 @@ class VolunteerProfile extends Model
 
     protected $table = 'volunteer_profile'; // تعريف اسم الجدول
 
-   protected $fillable = [
-    'user_id',
-    'city_id',
-    'bio',
-    'phone',
-    'birth_date',
-    'name', // ✨ تم إضافة الحقل الجديد هنا
-];
+	   protected $fillable = [
+	    'user_id',
+	    'city_id',
+	    'bio',
+	    'phone',
+	    'birth_date',
+	    'name', // ✨ تم إضافة الحقل الجديد هنا
+	];
 
     // تعطيل الطوابع الزمنية (created_at, updated_at) لهذا الجدول
     public $timestamps = false;

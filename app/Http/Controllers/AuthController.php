@@ -14,13 +14,14 @@ use Illuminate\Support\Facades\Validator; // للتحقق من صحة البيا
         
         public function register(Request $request)
 {
-    // 1. التحقق من صحة البيانات المدخلة (Validation) - تم إضافة city_id 
-    $validator = Validator::make($request->all(), [
+     // 1. التحقق من صحة البيانات المدخلة (Validation) - تم إضافة city_id و phone
+    $validator = Validator::make($request->all(), [l(), [
         'name' => 'required|string|max:255',
         'email' => 'required|string|email|max:255|unique:users',
         'password' => 'required|string|min:8|confirmed',
         'user_type' => 'required|in:volunteer,charity',
         'city_id' => 'required|exists:cities,id', // ✨ تمت إضافة قاعدة التحقق من city_id
+        'phone' => 'nullable|string|max:20', // ✨ إضافة حقل الهاتف (nullable مؤقتاً)
     ]);
 
     if ($validator->fails()) {
@@ -45,6 +46,7 @@ use Illuminate\Support\Facades\Validator; // للتحقق من صحة البيا
             'user_id' => $user->id,
             'name' => $validated['name'],
             'city_id' => $validated['city_id'], // ✨ تصحيح الخطأ: استبدال القيمة الثابتة (1) بالبيانات المدخلة
+            'phone' => $validated['phone'] ?? null, // ✨ إضافة حقل الهاتف
             'name_ar' => $validated['name'],
         ]);
     } elseif ($user->user_type === 'volunteer') {
@@ -53,6 +55,7 @@ use Illuminate\Support\Facades\Validator; // للتحقق من صحة البيا
             'user_id' => $user->id,
             'name' => $validated['name'], // استخدام $validated
             'city_id' => $validated['city_id'], // استخدام $validated
+            'phone' => $validated['phone'] ?? null, // ✨ إضافة حقل الهاتف
         ]);
     }
     
