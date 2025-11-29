@@ -11,16 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-        });
+       // هذا الكود هو الذي يجب أن يحل محل الكود الافتراضي لجدول 'users'
 
+Schema::create('users', function (Blueprint $table) {
+        $table->id();
+        $table->string('name'); // <--- تأكد من وجود هذا
+        $table->string('email')->unique();
+        $table->timestamp('email_verified_at')->nullable();
+        $table->string('password');
+
+        // إضافة الأعمدة المطلوبة لمشروع GiveHub
+       // الكود المُعدَّل
+$table->enum('user_type', ['volunteer', 'charity', 'admin'])->default('volunteer');
+        $table->boolean('is_active')->default(true); // <--- أضف هذا
+
+        $table->rememberToken();
+        $table->timestamps();
+    });
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
